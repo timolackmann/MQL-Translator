@@ -1,38 +1,41 @@
 exports = async function(query, documentModel){
-  // This default function will get a value and find a document in MongoDB
-  // To see plenty more examples of what you can do with functions see: 
-  // https://www.mongodb.com/docs/atlas/app-services/functions/
 
-  // Find the name of the MongoDB service you want to use (see "Linked Data Sources" tab)
+  const { Configuration, OpenAIApi } = require("openai");
+  const configuration = new Configuration({
+    apiKey: context.values.get("openai_api_key"),
+  });
+  const openai = new OpenAIApi(configuration);
   var serviceName = "mongodb-atlas";
 
   // Update these to reflect your db/collection
-  var dbName = "db_name";
-  var collName = "coll_name";
+  var dbName = "mqlConverter";
+  var collName = "queries";
 
   // Get a collection from the context
   var collection = context.services.get(serviceName).db(dbName).collection(collName);
 
-  var findResult;
+  collection.insertOne({ "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
+  
+  var promptText = "# convert the following query to MQL\n\n" + query + "\n\n# document model\n\n" + documentModel + "\n\n# MQL\n\n";
+
   try {
-    // Get a value from the context (see "Values" tab)
-    // Update this to reflect your value's name.
-    var valueName = "value_name";
-    var value = context.values.get(valueName);
-
-    // Execute a FindOne in MongoDB 
-    findResult = await collection.findOne(
-      { owner_id: context.user.id, "fieldName": value, "argField": arg},
-    );
-
-  } catch(err) {
-    console.log("Error occurred while executing findOne:", err.message);
-
-    return { error: err.message };
+    var result = await openai.createCompletion({
+      engine: "text-davinci-003",
+      prompt: promptText,
+      maxTokens: 150,
+      temperature: 0,
+      topP: 1,
+      presencePenalty: 0,
+      frequencyPenalty: 0,
+      bestOf: 1,
+      n: 1,
+      stream: false,
+      stop: ["#", ";"]
+    });
   }
-
-  // To call other named functions:
-  // var result = context.functions.execute("function_name", arg1, arg2);
+  catch (err) {
+    console.log(err);
+  }
 
   return { result: findResult };
 };
