@@ -1,1 +1,7 @@
-[]
+[
+    {
+        "name": "ConvertQuery",
+        "private": true,
+        "disable_arg_logs": true
+    }
+]
