@@ -36,6 +36,6 @@ exports = async function(query, documentModel){
   catch (err) {
     console.log(err);
   }
-
-  return { result: findResult };
+  console.log(result);
+  return { result: result };
 };
