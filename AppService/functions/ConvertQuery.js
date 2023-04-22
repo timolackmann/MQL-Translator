@@ -14,10 +14,13 @@ exports = async function(query, documentModel){
   // Get a collection from the context
   var collection = context.services.get(serviceName).db(dbName).collection(collName);
 
-  collection.insertOne({ "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
+  // Insert a document into the collection and store object id
+  var objId = collection.insertOne({ "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id }).insertedId;
   
+  console.log(objId);
+
   var promptText = '# convert the following SQL to MQL\n\n' + query + '\n\n# document model\n\n' + documentModel + '\n\n# MQL\n\n';
-  console.log(promptText);
+
   try {
     var result = await openai.createCompletion({
       model: "text-davinci-003",
@@ -38,6 +41,8 @@ exports = async function(query, documentModel){
       console.log(error.message);
     }
   }
-  console.log(result);
-  return { result: result };
+
+  //insert result into the collection
+  collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].text, "validated":false } });
+  console.log(result.data.choices[0].text);
 };
