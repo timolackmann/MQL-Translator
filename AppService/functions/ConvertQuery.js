@@ -33,8 +33,13 @@ exports = async function(query, documentModel){
       stop: ["#", ";"]
     });
   }
-  catch (err) {
-    console.log(err);
+  catch (error) {
+    if (error.response) {
+      console.log(error.response.status);
+      console.log(error.response.data);
+    } else {
+      console.log(error.message);
+    }
   }
   console.log(result);
   return { result: result };
