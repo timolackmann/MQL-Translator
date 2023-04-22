@@ -16,13 +16,13 @@ exports = async function(query, documentModel){
 
   collection.insertOne({ "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
   
-  var promptText = "# convert the following query to MQL\n\n" + query + "\n\n# document model\n\n" + documentModel + "\n\n# MQL\n\n";
-
+  var promptText = '# convert the following query to MQL\n\n' + query + '\n\n# document model\n\n' + documentModel + '\n\n# MQL\n\n';
+  console.log(promptText);
   try {
     var result = await openai.createCompletion({
       engine: "text-davinci-003",
-      prompt: promptText,
-      maxTokens: 150,
+      prompt: "# convert the following SQL to MQL \n\n INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country) VALUES ('Cardinal','Tom B. Erichsen','Skagen 21','Stavanger','4006','Norway');",
+      maxTokens: 4000,
       temperature: 0,
       topP: 1,
       presencePenalty: 0,
