@@ -16,27 +16,24 @@ exports = async function(query, documentModel){
 
   collection.insertOne({ "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
   
-  var promptText = '# convert the following query to MQL\n\n' + query + '\n\n# document model\n\n' + documentModel + '\n\n# MQL\n\n';
+  var promptText = '# convert the following SQL to MQL\n\n' + query + '\n\n# document model\n\n' + documentModel + '\n\n# MQL\n\n';
   console.log(promptText);
   try {
     var result = await openai.createCompletion({
-      engine: "text-davinci-003",
-      prompt: "# convert the following SQL to MQL \n\n INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country) VALUES ('Cardinal','Tom B. Erichsen','Skagen 21','Stavanger','4006','Norway');",
-      maxTokens: 4000,
+      model: "text-davinci-003",
+      prompt: promptText,
       temperature: 0,
-      topP: 1,
-      presencePenalty: 0,
-      frequencyPenalty: 0,
-      bestOf: 1,
-      n: 1,
-      stream: false,
-      stop: ["#", ";"]
+      max_tokens: 150,
+      top_p: 1.0,
+      frequency_penalty: 0.0,
+      presence_penalty: 0.0,
+      stop: ["#", ";"],
     });
   }
   catch (error) {
     if (error.response) {
       console.log(error.response.status);
-      console.log(error.response.data);
+      console.log(error.response.data.error.message);
     } else {
       console.log(error.message);
     }
