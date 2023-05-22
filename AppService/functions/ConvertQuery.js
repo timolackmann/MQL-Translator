@@ -19,18 +19,15 @@ exports = async function(query, documentModel){
   
   console.log(objId);
 
-  var promptText = '# convert the following SQL to MQL\n\n' + query + '\n\n# document model\n\n' + documentModel + '\n\n# MQL\n\n';
+  var promptText = 'convert the following SQL to MQL\n\n' + query + '\n\n# document model\n\n' + documentModel;
 
   try {
-    var result = await openai.createCompletion({
+    var result = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      prompt: promptText,
-      temperature: 0,
-      max_tokens: 150,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-      stop: ["#", ";"],
+      messages:[
+        {"role": "system", "content": "You are a helpful assistant that translates SQL to mongoDB aggregation pipeline. You just need to return the mongodb command without an explaination"},
+        {"role":"user","content":promptText}
+        ]
     });
   }
   catch (error) {
@@ -43,6 +40,5 @@ exports = async function(query, documentModel){
   }
 
   //insert result into the collection
-  //collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].text, "validated":false } });
-  console.log(result);
+  collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].message, "validated":false } });
 };
