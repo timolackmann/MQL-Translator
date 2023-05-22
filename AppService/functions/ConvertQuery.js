@@ -23,7 +23,7 @@ exports = async function(query, documentModel){
 
   try {
     var result = await openai.createCompletion({
-      model: "text-davinci-003",
+      model: "gpt-3.5-turbo",
       prompt: promptText,
       temperature: 0,
       max_tokens: 150,
@@ -43,6 +43,6 @@ exports = async function(query, documentModel){
   }
 
   //insert result into the collection
-  collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].text, "validated":false } });
-  console.log(result.data.choices[0].text);
+  //collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].text, "validated":false } });
+  console.log(result);
 };
