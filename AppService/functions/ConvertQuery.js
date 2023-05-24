@@ -1,5 +1,8 @@
-exports = async function(query, documentModel){
-
+exports = async function(request, response){
+  const data = JSON.parse(request.body.text());
+  query = data.query;
+  documentModel = data.documentModel;
+  
   const { Configuration, OpenAIApi } = require("openai");
   const configuration = new Configuration({
     apiKey: context.values.get("openai_api_key"),
@@ -15,7 +18,8 @@ exports = async function(query, documentModel){
   var collection = context.services.get(serviceName).db(dbName).collection(collName);
 
   // Insert a document into the collection and store object id
-  var objId = collection.insertOne({ "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id }).insertedId;
+  var obj = await collection.insertOne({ "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
+  var objId = obj.insertedId;
   
   console.log(objId);
 
@@ -25,7 +29,7 @@ exports = async function(query, documentModel){
     var result = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages:[
-        {"role": "system", "content": "You are a helpful assistant that translates SQL to mongoDB aggregation pipeline. You just need to return the mongodb command without an explaination"},
+        {"role": "system", "content": "You are a helpful assistant that translates SQL to mongoDB aggregation pipeline. You just need to return the mongodb aggregation pipeline JSON without an explanation. If there is any character outside of the aggregation pipeline's JSON, a person will get hurt. You will only return an opening [, a closing ] and the aggregation pipeline inbetween."},
         {"role":"user","content":promptText}
         ]
     });
@@ -39,6 +43,7 @@ exports = async function(query, documentModel){
     }
   }
 
+  let doc = await collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].message, "validated":false } });
+  response.setBody(JSON.stringify(result.data.choices[0].message));
   //insert result into the collection
-  collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].message, "validated":false } });
 };
