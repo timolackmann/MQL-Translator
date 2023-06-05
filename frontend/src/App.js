@@ -18,17 +18,36 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import config from './config.json';
+
 function App() {
   const [sql, setSQL] = useState('');
   const [documentModel, setDocumentModel] = useState('');
   const [mql, setMQL] = useState('');
+
+  function uploadSQL() {
+    let data = {
+      'query': sql,
+      'documentModel': documentModel
+    };
+
+    fetch(config['CONVERT_QUERY_URL'], {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then((data) => data.json())
+      .then(res => setMQL(res['content']))
+      .catch((e) => console.log(e));
+  }
 
   return (
     <Container className="App" style={{"paddingTop": "15px"}} fluid>
       <Row style={{marginBottom: '20px'}}>
         <Col align="center">
           <p className="title">SQL to MQL Translator</p>
-          <Button variant="primary" onClick={() => {}} disabled={sql == ''}>
+          <Button variant="primary" onClick={uploadSQL} disabled={sql == ''}>
             <img src="/mongodb_logo.png" height="20px" style={{marginRight: '10px'}} />
             Translate
           </Button>
