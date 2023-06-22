@@ -1,12 +1,12 @@
 [
     {
-        "name": "ConvertQuery",
+        "name": "validateQuery",
         "private": true,
         "run_as_system": true,
         "disable_arg_logs": true
     },
     {
-        "name": "validateQuery",
+        "name": "ConvertQuery",
         "private": true,
         "run_as_system": true,
         "disable_arg_logs": true
