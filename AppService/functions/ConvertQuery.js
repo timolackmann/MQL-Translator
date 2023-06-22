@@ -26,9 +26,10 @@ exports = async function(request, response){
 
   var promptText = 'convert the following SQL to MQL\n\n' + query 
   
-  if (documentModel) {
-    promptText =+ '\n\n# document model\n\n' + documentModel;
-  } 
+  //check if document model is provided and add it to the prompt
+  if(documentModel != null){
+    promptText += '\n\nusing the following document model\n\n' + documentModel 
+  }
 
   try {
     var result = await openai.createChatCompletion({
