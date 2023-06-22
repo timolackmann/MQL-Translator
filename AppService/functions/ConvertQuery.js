@@ -47,5 +47,5 @@ exports = async function(query, documentModel){
   }
 
   let doc = await collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].message, "validated":false } });
-  return result.data.choices[0].message;
+  return result.data.choices[0].message.content;
 };
