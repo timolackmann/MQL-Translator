@@ -34,7 +34,7 @@ exports = async function(request, response){
     var result = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages:[
-        {"role": "system", "content": "You are a helpful assistant that translates SQL to mongoDB aggregation pipeline. You just need to return the mongodb aggregation pipeline JSON without an explanation. If there is any character outside of the aggregation pipeline's JSON, a person will get hurt. You will only return an opening [, a closing ] and the aggregation pipeline inbetween."},
+        {"role": "system", "content": "You are a helpful assistant that translates SQL to mongoDB aggregation pipeline. You just need to return the mongodb command or aggregation pipeline JSON without an explanation."},
         {"role":"user","content":promptText}
         ]
     });
