@@ -1,4 +1,5 @@
 exports = async function(request, response){
+  
   const data = JSON.parse(request.body.text());
   query = data.query;
   documentModel = data.documentModel;
@@ -23,7 +24,11 @@ exports = async function(request, response){
   
   console.log(objId);
 
-  var promptText = 'convert the following SQL to MQL\n\n' + query + '\n\n# document model\n\n' + documentModel;
+  var promptText = 'convert the following SQL to MQL\n\n' + query 
+  
+  if (documentModel) {
+    promptText =+ '\n\n# document model\n\n' + documentModel;
+  } 
 
   try {
     var result = await openai.createChatCompletion({
