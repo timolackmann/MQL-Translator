@@ -7,7 +7,7 @@
     },
     {
         "name": "ConvertQuery",
-        "private": true,
+        "private": false,
         "disable_arg_logs": true
     },
     {
