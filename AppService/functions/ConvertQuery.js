@@ -31,6 +31,8 @@ exports = async function(request, response){
     promptText += '\n\nusing the following document model\n\n' + documentModel 
   }
 
+  console.log(promptText);
+
   try {
     var result = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
