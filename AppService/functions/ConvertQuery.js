@@ -1,8 +1,5 @@
-exports = async function(request, response){
+exports = async function(query, documentModel){
   
-  const data = JSON.parse(request.body.text());
-  query = data.query;
-  documentModel = data.documentModel;
   
   const { Configuration, OpenAIApi } = require("openai");
   const configuration = new Configuration({
@@ -31,8 +28,6 @@ exports = async function(request, response){
     promptText += '\n\nusing the following document model\n\n' + documentModel 
   }
 
-  console.log(promptText);
-
   try {
     var result = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -52,6 +47,5 @@ exports = async function(request, response){
   }
 
   let doc = await collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].message, "validated":false } });
-  response.setBody(JSON.stringify(result.data.choices[0].message));
-  //insert result into the collection
+  return result.data.choices[0].message;
 };
