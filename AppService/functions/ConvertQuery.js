@@ -24,7 +24,7 @@ exports = async function(query, documentModel){
   var promptText = 'convert the following SQL to MQL\n\n' + query 
   
   //check if document model is provided and add it to the prompt
-  if(documentModel != null){
+  if(documentModel != null && documentModel !=""){
     promptText += '\n\nusing the following document model\n\n' + documentModel 
   }
 
