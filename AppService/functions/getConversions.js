@@ -39,13 +39,10 @@ exports = async function(searchArgs){
     try {
 
       result = await collection.aggregate(pipeline);
-
     } catch(err) {
       console.log("Error occurred while executing find:", err.message);
-
       return { error: err.message };
     }
-
-
+    
   return result;
 };
