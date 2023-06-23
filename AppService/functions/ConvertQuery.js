@@ -15,12 +15,7 @@ exports = async function(query, documentModel){
   // Get a collection from the context
   var collection = context.services.get(serviceName).db(dbName).collection(collName);
 
-  // Insert a document into the collection and store object id
-  var obj = await collection.insertOne({ "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
-  var objId = obj.insertedId;
   
-  console.log(objId);
-
   var promptText = 'convert the following SQL to MQL\n\n' + query 
   
   //check if document model is provided and add it to the prompt
@@ -46,6 +41,7 @@ exports = async function(query, documentModel){
     }
   }
 
-  let doc = await collection.updateOne({ "_id": objId }, { $set: { "result": result.data.choices[0].message, "validated":false } });
+  const mql = result.data.choices[0].message.content;
+  collection.insertOne({"result": result.data.choices[0].message, "validated":false, "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
   return result.data.choices[0].message.content;
 };
