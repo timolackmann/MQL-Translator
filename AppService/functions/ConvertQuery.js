@@ -42,6 +42,6 @@ exports = async function(query, documentModel){
   }
 
   const mql = result.data.choices[0].message.content;
-  collection.insertOne({"result": result.data.choices[0].message, "validated":false, "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
-  return result.data.choices[0].message.content;
+  collection.insertOne({"result": mql, "validated":false, "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
+  return mql;
 };
