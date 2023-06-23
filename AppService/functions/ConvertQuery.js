@@ -27,7 +27,7 @@ exports = async function(query, documentModel){
     var result = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages:[
-        {"role": "system", "content": "You are a helpful assistant that translates SQL to mongoDB aggregation pipeline. You must only return the aggregation pipeline JSON without any additional explanation. The response must start with '[' and end with ']'"},
+        {"role": "system", "content": "You are a helpful assistant that translates SQL to mongoDB aggregation pipeline. You must only return the aggregation pipeline JSON without any additional explanation. The response must start with '[' and end with ']'. Every key and value must start and end with quotation marks"},
         {"role":"user","content":promptText}
         ]
     });
