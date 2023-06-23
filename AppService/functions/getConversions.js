@@ -9,10 +9,12 @@ exports = async function(searchArgs){
   // Get a collection from the context
   var collection = context.services.get(serviceName).db(dbName).collection(collName);
 
-  var findResult;
+  var result;
+  
+  
   try {
  
-    findResult = await collection.find();
+    result = await collection.find();
 
   } catch(err) {
     console.log("Error occurred while executing find:", err.message);
@@ -21,5 +23,5 @@ exports = async function(searchArgs){
   }
 
 
-  return findResult;
+  return result;
 };
