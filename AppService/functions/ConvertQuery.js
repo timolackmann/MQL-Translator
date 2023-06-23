@@ -3,6 +3,7 @@ exports = async function(query, documentModel){
   //configure openAI module for request
   const { Configuration, OpenAIApi } = require("openai");
   const configuration = new Configuration({
+  //Using App Service Secret for api key storage
     apiKey: context.values.get("openai_api_key"),
   });
   const openai = new OpenAIApi(configuration);
