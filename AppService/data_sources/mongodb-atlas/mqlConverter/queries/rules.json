@@ -1,4 +1,23 @@
 {
     "collection": "queries",
-    "database": "mqlConverter"
+    "database": "mqlConverter",
+    "roles": [
+        {
+            "name": "readOwnWriteOwn",
+            "apply_when": {},
+            "document_filters": {
+                "write": {
+                    "user": "%%user.id"
+                },
+                "read": {
+                    "user": "%%user.id"
+                }
+            },
+            "read": true,
+            "write": true,
+            "insert": true,
+            "delete": true,
+            "search": true
+        }
+    ]
 }
