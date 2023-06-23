@@ -21,5 +21,5 @@ exports = async function(){
   }
 
 
-  return { result: result };
+  return result;
 };
