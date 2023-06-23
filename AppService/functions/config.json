@@ -12,5 +12,11 @@
     {
         "name": "resetFunc",
         "private": true
+    },
+    {
+        "name": "cleanup",
+        "private": true,
+        "run_as_system": true,
+        "disable_arg_logs": true
     }
 ]
