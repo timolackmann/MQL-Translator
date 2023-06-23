@@ -1,21 +1,20 @@
 exports = async function(query, documentModel){
   
-  
+  //configure openAI module for request
   const { Configuration, OpenAIApi } = require("openai");
   const configuration = new Configuration({
     apiKey: context.values.get("openai_api_key"),
   });
   const openai = new OpenAIApi(configuration);
+  
+  //connect with mongodb instance
   var serviceName = "mongodb-atlas";
-
-  // Update these to reflect your db/collection
   var dbName = "mqlConverter";
   var collName = "queries";
-
-  // Get a collection from the context
+  
   var collection = context.services.get(serviceName).db(dbName).collection(collName);
 
-  
+  // create prompt for ChatGPT
   var promptText = 'convert the following SQL to MQL\n\n' + query 
   
   //check if document model is provided and add it to the prompt
@@ -42,6 +41,8 @@ exports = async function(query, documentModel){
   }
 
   const mql = result.data.choices[0].message.content;
+  
+  //save request and chatGPT response in Atlas
   collection.insertOne({"result": mql, "validated":false, "query": query, "documentModel": documentModel, "date": new Date(), "user": context.user.id });
   return mql;
 };
