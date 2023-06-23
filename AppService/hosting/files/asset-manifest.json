@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c9f8c3d5.css",
+    "main.js": "/static/js/main.9780dc5b.js",
+    "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
+    "static/media/LexendDeca-Light.ttf": "/static/media/LexendDeca-Light.fa80f53b3adc59d189ba.ttf",
+    "index.html": "/index.html",
+    "main.c9f8c3d5.css.map": "/static/css/main.c9f8c3d5.css.map",
+    "main.9780dc5b.js.map": "/static/js/main.9780dc5b.js.map",
+    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c9f8c3d5.css",
+    "static/js/main.9780dc5b.js"
+  ]
+}
