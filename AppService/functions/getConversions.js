@@ -33,7 +33,7 @@ exports = async function(searchArgs){
         "$match": {}
       }
     ];
-    
+  }
     console.log(pipeline)
     
     try {
@@ -45,7 +45,6 @@ exports = async function(searchArgs){
 
       return { error: err.message };
     }
-  }
 
 
   return result;
