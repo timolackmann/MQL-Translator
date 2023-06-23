@@ -29,14 +29,11 @@ exports = async function(searchArgs){
     //if searchArgs is empty, return all documents
     var pipeline = [
       {
-        "$search": {
-          "text": {
-            "query": "",
-            "path": "query"
-          }
-        }
+        "$match": {}
       }
     ];
+    
+    console.log(pipeline)
     
     try {
 

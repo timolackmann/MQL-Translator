@@ -5,12 +5,12 @@
         "disable_arg_logs": true
     },
     {
-        "name": "resetFunc",
-        "private": true
-    },
-    {
         "name": "getConversions",
         "private": false,
         "disable_arg_logs": true
+    },
+    {
+        "name": "resetFunc",
+        "private": true
     }
 ]
