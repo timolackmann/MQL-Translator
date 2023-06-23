@@ -11,15 +11,42 @@ exports = async function(searchArgs){
 
   var result;
   
-  
-  try {
- 
-    result = await collection.find();
+  //validate if searchArgs is empty or not
+  if (searchArgs != null && searchArgs != "") {
 
-  } catch(err) {
-    console.log("Error occurred while executing find:", err.message);
+    //use searchArgs to create an Atlas Search pipeline
+    var pipeline = [
+      {
+        "$search": {
+          "text": {
+            "query": searchArgs,
+            "path": "query"
+          }
+        }
+      }
+    ];
+  } else {
+    //if searchArgs is empty, return all documents
+    var pipeline = [
+      {
+        "$search": {
+          "text": {
+            "query": "",
+            "path": "query"
+          }
+        }
+      }
+    ];
+    
+    try {
 
-    return { error: err.message };
+      result = await collection.aggregate(pipeline);
+
+    } catch(err) {
+      console.log("Error occurred while executing find:", err.message);
+
+      return { error: err.message };
+    }
   }
 
 
