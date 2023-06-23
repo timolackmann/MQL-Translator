@@ -1,4 +1,4 @@
-exports = async function(){
+exports = async function(searchArgs){
 
   var serviceName = "mongodb-atlas";
 
