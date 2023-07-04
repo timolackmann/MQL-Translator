@@ -5,6 +5,8 @@ This is a private repository and is an example of using ChatGPT to translate SQL
 This repository includes a MongoDB App Service application which runs Functions to call ChatGPT API.
 In order to use this repository you will need to have a ChatGPT API key available.
 
+![Screenshot](img/screenshot.png)
+
 # Setup
 
 Setting up this solution involves a number of steps in the Atlas web portal,
