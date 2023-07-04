@@ -43,7 +43,7 @@ import {
             </Col>
           <Col align="center">
             <p className="title">SQL to MQL Translator</p>
-            <Button variant="primary" onClick={convertSQL} disabled={sql == ''}>
+            <Button variant="primary" onClick={convertSQL} disabled={sql === ''}>
               <img src="/mongodb_logo.png" height="20px" style={{marginRight: '10px'}} />
               Translate
             </Button>

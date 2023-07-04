@@ -1,8 +1,7 @@
 {
-    "app_id": "sqltranslator-eckur",
     "config_version": 20210101,
+    "app_id": "sqltranslator-drinw",
     "name": "SQLTranslator",
     "location": "IE",
-    "provider_region": "aws-eu-west-1",
     "deployment_model": "LOCAL"
 }

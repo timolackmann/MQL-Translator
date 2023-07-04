@@ -1,6 +1,5 @@
 exports = async function(searchArgs){
 
-  console.log(searchArgs);
   var serviceName = "mongodb-atlas";
 
   // Update these to reflect your db/collection
@@ -34,7 +33,6 @@ exports = async function(searchArgs){
       }
     ];
   }
-    console.log(pipeline)
     
     try {
 

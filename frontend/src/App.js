@@ -8,8 +8,7 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import { RealmAppProvider, useRealmApp } from "./RealmApp";
 import Login from "./Pages/Login";
 import Converter from "./Pages/Converter";
-import Grid from "./Pages/Grid";
-const APP_ID = "sqltranslator-eckur";
+const APP_ID = process.env.REACT_APP_REALM_APP_ID;
 
 const RequireLoggedInUser = ({ children }) => {
   const app = useRealmApp();
