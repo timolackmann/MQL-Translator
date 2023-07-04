@@ -19,13 +19,13 @@ followed by some command line scripts to be run locally.
 3. Deploy a new cluster in this project to store your ChatGPT interaction.
 4. Create an API Key for the project. This will be used to programmatically
    deploy the App Services app:
-   _ Click **Access Manager** on the top bar, and then **Project Access**
-   _ Click **Create API Key**
-   _ Enter an appropriate name for the key, e.g. `SQL2MQL-API`
-   _ Select the `Project Owner` role.
-   _ Click **Next**
-   _ Record the Public and Private Key details and store them securely.
-   \_ Add your IP address to the API Access List. \* Click **Done** when you're ready to save the new key to your Project
+   - Click **Access Manager** on the top bar, and then **Project Access**
+   - Click **Create API Key**
+   - Enter an appropriate name for the key, e.g. `SQL2MQL-API`
+   - Select the `Project Owner` role.
+   - Click **Next**
+   - Record the Public and Private Key details and store them securely.
+   - Add your IP address to the API Access List. \* Click **Done** when you're ready to save the new key to your Project
 
 ## Local Command Line Steps
 
