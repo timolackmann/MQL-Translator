@@ -15,17 +15,20 @@ import {
   import "ace-builds/src-noconflict/mode-json";
   import "ace-builds/src-noconflict/theme-monokai";
   import "ace-builds/src-noconflict/ext-language_tools";  
-  
+
   function Converter() {
     const [sql, setSQL] = useState('');
     const [documentModel, setDocumentModel] = useState('');
     const [mql, setMQL] = useState('');
+    const [loading, setLoading] = useState("hidden");
     
     const app = useRealmApp();
 
     function convertSQL() {
+      setLoading("");
       app.currentUser.callFunction("ConvertQuery", sql, documentModel).then((result) => {
         setMQL(result);
+        setLoading("hidden");
       });
     }
 
@@ -43,7 +46,7 @@ import {
             </Col>
           <Col align="center">
             <p className="title">SQL to MQL Translator</p>
-            <Button variant="primary" onClick={convertSQL} disabled={sql === ''}>
+            <Button id='convert' variant="primary" onClick={convertSQL} disabled={sql === ''}>
               <img src="/mongodb_logo.png" height="20px" style={{marginRight: '10px'}} />
               Translate
             </Button>
@@ -94,6 +97,10 @@ import {
           </Col>
           <Col align='left'>
             <p>MQL Output</p>
+            <div className='loading-banner' hidden={loading}>
+              <div className='spinner'></div>
+              <p className='loading-text'>Running Translation...</p>              
+            </div>
             <AceEditor
               mode="json"
               theme="monokai"
@@ -114,6 +121,11 @@ import {
             <Grid />
         </Row>
       </Container>
+
+
+      //add css for the banner
+
+
     );
   }
   
