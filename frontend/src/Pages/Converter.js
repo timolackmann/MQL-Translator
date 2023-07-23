@@ -5,22 +5,18 @@ import {
     Accordion,
     Button
   } from 'react-bootstrap';
-  
   import '../App.scss';
   import React, {useState} from 'react';
-  import { useRealmApp } from "../RealmApp";
-  import AceEditor from "react-ace";
-  import Grid from "./Grid";
-  import "ace-builds/src-noconflict/mode-mysql";
-  import "ace-builds/src-noconflict/mode-json";
-  import "ace-builds/src-noconflict/theme-monokai";
-  import "ace-builds/src-noconflict/ext-language_tools";  
+  import { useRealmApp } from '../RealmApp';
+  import Grid from './Grid';
+  import Editor from '@uiw/react-textarea-code-editor';
+
 
   function Converter() {
     const [sql, setSQL] = useState('');
     const [documentModel, setDocumentModel] = useState('');
     const [mql, setMQL] = useState('');
-    const [loading, setLoading] = useState("hidden");
+    const [loading, setLoading] = useState('hidden');
     
     const app = useRealmApp();
 
@@ -58,39 +54,31 @@ import {
               <Accordion.Item eventKey="0">
                 <Accordion.Header>SQL Query Definition</Accordion.Header>
                 <Accordion.Body>
-                  <AceEditor
-                    mode="mysql"
-                    theme="monokai"
-                    onChange={(text) => setSQL(text)}
-                    value={sql}
-                    name="SQL_EDITOR"
-                    editorProps={{ $blockScrolling: true }}
-                    style={{width: '100%', height: '100px'}}
-                    setOptions={{
-                      tabSize: 2,
-                      behavioursEnabled: true,
-                      autoScrollEditorIntoView: true,
-                    }}
-                  />
+                <Editor
+                  value={sql}
+                  language='sql'
+                  onChange={(text) => setSQL(text.target.value)}
+                  padding={10}
+                  style={{
+                    fontSize: 12,
+                    fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                  }}
+                />
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">
                 <Accordion.Header>Document Model (optional)</Accordion.Header>
                 <Accordion.Body>
-                  <AceEditor
-                    mode="json"
-                    theme="monokai"
-                    onChange={(text) => setDocumentModel(text)}
-                    value={documentModel}
-                    name="DOCUMENT_MODEL_EDITOR"
-                    editorProps={{ $blockScrolling: true }}
-                    style={{width: '100%', height: '250px'}}
-                    setOptions={{
-                      tabSize: 2,
-                      behavioursEnabled: true,
-                      autoScrollEditorIntoView: true,
-                    }}
-                  />
+                <Editor
+                  value={documentModel}
+                  language='json'
+                  onChange={(text) => setDocumentModel(text.target.value)}
+                  padding={10}
+                  style={{
+                    fontSize: 12,
+                    fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                  }}
+                />
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
@@ -101,19 +89,14 @@ import {
               <div className='spinner'></div>
               <p className='loading-text'>Running Translation...</p>              
             </div>
-            <AceEditor
-              mode="json"
-              theme="monokai"
+            <Editor
               value={mql}
-              name="MQL_EDITOR"
-              editorProps={{ $blockScrolling: true }}
-              style={{width: '100%', height: '400px'}}
-              setOptions={{
-                tabSize: 2,
-                behavioursEnabled: true,
-                autoScrollEditorIntoView: true,
+              language='json'
+              padding={10}
+              style={{
+                fontSize: 12,
+                fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
               }}
-              readOnly={true}
             />
           </Col>
         </Row>
@@ -121,11 +104,6 @@ import {
             <Grid />
         </Row>
       </Container>
-
-
-      //add css for the banner
-
-
     );
   }
   
